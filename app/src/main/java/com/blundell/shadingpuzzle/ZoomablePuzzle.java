@@ -38,25 +38,22 @@ public class ZoomablePuzzle extends GridLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public ZoomablePuzzle setGridXSize(int lightBoxes, int maxHints) {
+    public ZoomablePuzzle setGridSize(int lightBoxes) {
         this.xLightBoxes = lightBoxes;
-        this.colMaxHints = maxHints;
-        return this;
-    }
-
-    public ZoomablePuzzle setGridYSize(int lightBoxes, int maxHints) {
         this.yLightBoxes = lightBoxes;
-        this.rowMaxHints = maxHints;
+        this.grid = new LightBox[xLightBoxes][yLightBoxes];
         return this;
     }
 
-    public ZoomablePuzzle setLeftHints(String[][] leftHints) {
+    public ZoomablePuzzle setLeftHints(String[][] leftHints, int maxHintsPerRow) {
         this.leftHints = leftHints;
+        this.rowMaxHints = maxHintsPerRow;
         return this;
     }
 
-    public ZoomablePuzzle setTopHints(String[][] topHints) {
+    public ZoomablePuzzle setTopHints(String[][] topHints, int maxHintsPerCol) {
         this.topHints = topHints;
+        this.colMaxHints = maxHintsPerCol;
         return this;
     }
 
@@ -68,15 +65,10 @@ public class ZoomablePuzzle extends GridLayout {
     public void doTheLayoutThatWillEventuallyMoveToXmlAttrs() {
         setColumnCount(colMaxHints + xLightBoxes);
         setRowCount(rowMaxHints + yLightBoxes);
-        setGridSize(xLightBoxes, yLightBoxes);
         addLeftHints();
         addTopHints();
         addLightBoxes();
         toggleDimBoxes();
-    }
-
-    private void setGridSize(int xSize, int ySize) {
-        grid = new LightBox[xSize][ySize];
     }
 
     private void addLeftHints() {

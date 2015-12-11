@@ -9,10 +9,8 @@ import java.util.List;
 
 public class GchqActivity extends Activity {
 
-    private static final int MAX_HINTS_PER_ROW = 9;
-    private static final int MAX_HINTS_PER_COL = 9;
-    private static final int LIGHT_BOXES_X = 25;
-    private static final int LIGHT_BOXES_Y = 25;
+    private static final int MAX_HINTS_PER_LINE = 9;
+    private static final int LIGHT_BOXES_PER_LINE = 25;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,10 +19,9 @@ public class GchqActivity extends Activity {
 
         ZoomablePuzzle puzzle = (ZoomablePuzzle) findViewById(R.id.root);
 
-        puzzle.setGridXSize(LIGHT_BOXES_X, MAX_HINTS_PER_COL)
-                .setGridYSize(LIGHT_BOXES_Y, MAX_HINTS_PER_ROW)
-                .setLeftHints(createLeftHints())
-                .setTopHints(createTopHints())
+        puzzle.setGridSize(LIGHT_BOXES_PER_LINE)
+                .setLeftHints(createLeftHints(), MAX_HINTS_PER_LINE)
+                .setTopHints(createTopHints(), MAX_HINTS_PER_LINE)
                 .setDimmedBoxes(createDimBoxes())
                 .doTheLayoutThatWillEventuallyMoveToXmlAttrs();
 
@@ -90,7 +87,7 @@ public class GchqActivity extends Activity {
                 " , , ,1,1,2,1,1,2",
                 " , , , ,7,2,1,2,5",
         };
-        return createHints(LIGHT_BOXES_Y, MAX_HINTS_PER_ROW, hintsForRows);
+        return createHints(LIGHT_BOXES_PER_LINE, MAX_HINTS_PER_LINE, hintsForRows);
     }
 
     private String[][] createTopHints() {
@@ -121,7 +118,7 @@ public class GchqActivity extends Activity {
                 " , ,1,1,2,2,2,6,1",
                 " , , ,7,1,3,2,1,1",
         };
-        return createHints(LIGHT_BOXES_X, MAX_HINTS_PER_COL, hintsForCols);
+        return createHints(LIGHT_BOXES_PER_LINE, MAX_HINTS_PER_LINE, hintsForCols);
     }
 
     private String[][] createHints(int totalHintLines, int maxHintsPerLine, String[] hintLines) {
