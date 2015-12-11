@@ -2,6 +2,7 @@ package com.blundell.shadingpuzzle;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -12,12 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZoomablePuzzle extends GridLayout {
+    private final List<Zoomable> zoomables = new ArrayList<>();
+
     private ScaleGestureDetector scaleGestureDetector;
-    private List<Zoomable> zoomables = new ArrayList<>();
     private int xLightBoxes;
     private int colMaxHints;
     private int yLightBoxes;
     private int rowMaxHints;
+    private float zoomLevel = 1;
 
     public ZoomablePuzzle(Context context) {
         super(context);
@@ -107,8 +110,22 @@ public class ZoomablePuzzle extends GridLayout {
                     @Override
                     public boolean onScale(ScaleGestureDetector detector) {
                         float scaleFactor = detector.getScaleFactor();
+
+                        if (scaleFactor > 1.2) {
+                            zoomLevel = 0.8F;
+                        } else if (scaleFactor > 1.0) {
+                            zoomLevel = 0.5F;
+                        } else if (scaleFactor > 0.8) {
+                            zoomLevel = 0.3F;
+                        } else if (scaleFactor > 0.7) {
+                            zoomLevel = 0.2F;
+                        } else if (scaleFactor > 0.6) {
+                            zoomLevel = 0.1F;
+                        }
+
+                        Log.d("XXX", "Factor " + scaleFactor);
                         for (Zoomable zoomable : zoomables) {
-                            zoomable.adjustZoom(scaleFactor);
+                            zoomable.adjustZoom(zoomLevel);
                         }
                         return false;
                     }

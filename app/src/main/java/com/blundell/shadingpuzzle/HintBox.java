@@ -36,7 +36,5 @@ public class HintBox extends TextView implements ZoomablePuzzle.Zoomable {
     public void adjustZoom(float scaleFactor) {
         this.scaleFactor = scaleFactor;
         setTextSize(originalTextSize * scaleFactor);
-        requestLayout();
-        invalidate();
     }
 }
