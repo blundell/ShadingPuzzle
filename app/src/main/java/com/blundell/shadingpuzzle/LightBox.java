@@ -63,4 +63,9 @@ public class LightBox extends CheckBox implements ZoomablePuzzle.Zoomable {
 //        setHeight((int) (heightSize * scaleFactor));
         invalidate();
     }
+
+    public void setAlwaysDimmed() {
+        setChecked(true);
+        setEnabled(false);
+    }
 }

@@ -143,7 +143,7 @@ public class ZoomablePuzzle extends GridLayout {
     private void toggleDimBoxes() {
         for(Point point : dimmedBoxes) {
             LightBox lightBox = grid[point.x][point.y];
-            lightBox.setChecked(true);
+            lightBox.setAlwaysDimmed();
         }
     }
 
