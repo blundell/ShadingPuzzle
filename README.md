@@ -11,3 +11,5 @@ TODO:
  - A winning screen!
 
 ![](preview.png)
+
+APK to give it a go can be found under /releases/
