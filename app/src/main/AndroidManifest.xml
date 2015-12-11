@@ -8,7 +8,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
-    <activity android:name=".GchqActivity">
+    <activity android:name=".PuzzleActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 

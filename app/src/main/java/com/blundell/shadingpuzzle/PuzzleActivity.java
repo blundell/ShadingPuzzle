@@ -8,7 +8,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GchqActivity extends Activity {
+public class PuzzleActivity extends Activity {
 
     private static final int LIGHT_BOXES_PER_LINE = 25;
 
