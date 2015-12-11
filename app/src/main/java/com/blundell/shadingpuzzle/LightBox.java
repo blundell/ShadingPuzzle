@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 public class LightBox extends CheckBox implements ZoomablePuzzle.Zoomable {
 
     private final Paint onPaint = new Paint();
+    private final Paint alwaysOnPaint = new Paint();
     private final Paint offPaint = new Paint();
 
     private int widthSize;
@@ -16,7 +17,8 @@ public class LightBox extends CheckBox implements ZoomablePuzzle.Zoomable {
 
     public LightBox(Context context) {
         super(context);
-        onPaint.setColor(Color.BLACK);
+        onPaint.setColor(Color.parseColor("#404040"));
+        alwaysOnPaint.setColor(Color.BLACK);
         offPaint.setColor(Color.WHITE);
     }
 
@@ -30,7 +32,9 @@ public class LightBox extends CheckBox implements ZoomablePuzzle.Zoomable {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (isChecked()) {
+        if (isChecked() && !isEnabled()) {
+            canvas.drawPaint(alwaysOnPaint);
+        } else if (isChecked()) {
             canvas.drawPaint(onPaint);
         } else {
             canvas.drawPaint(offPaint);
