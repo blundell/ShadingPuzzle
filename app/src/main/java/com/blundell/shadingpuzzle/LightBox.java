@@ -1,0 +1,54 @@
+package com.blundell.shadingpuzzle;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.widget.CheckBox;
+
+public class LightBox extends CheckBox implements ZoomablePuzzle.Zoomable {
+
+    private final Paint onPaint = new Paint();
+    private final Paint offPaint = new Paint();
+
+    private float scaleFactor = 1;
+
+    public LightBox(Context context) {
+        super(context);
+        init();
+    }
+
+    private void init() {
+        onPaint.setColor(Color.BLACK);
+        offPaint.setColor(Color.WHITE);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+//        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+//        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+//
+//        int zoomedWidth = (int) (widthSize * scaleFactor);
+//        int zoomedHeight = (int) (heightSize * scaleFactor);
+//
+//        setMeasuredDimension(zoomedWidth, zoomedHeight);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (isChecked()) {
+            canvas.drawPaint(onPaint);
+        } else {
+            canvas.drawPaint(offPaint);
+        }
+    }
+
+    @Override
+    public void adjustZoom(float scaleFactor) {
+        this.scaleFactor = scaleFactor;
+        requestLayout();
+    }
+}
