@@ -1,7 +1,11 @@
 package com.blundell.shadingpuzzle;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GchqActivity extends Activity {
 
@@ -21,8 +25,15 @@ public class GchqActivity extends Activity {
                 .setGridYSize(LIGHT_BOXES_Y, MAX_HINTS_PER_ROW)
                 .setLeftHints(createLeftHints())
                 .setTopHints(createTopHints())
+                .setDimmedBoxes(createDimBoxes())
                 .doTheLayoutThatWillEventuallyMoveToXmlAttrs();
 
+    }
+
+    private List<Point> createDimBoxes() {
+        ArrayList<Point> points = new ArrayList<>();
+        points.add(new Point(0,0));
+        return points;
     }
 
     private String[][] createLeftHints() {

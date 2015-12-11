@@ -1,6 +1,7 @@
 package com.blundell.shadingpuzzle;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +24,8 @@ public class ZoomablePuzzle extends GridLayout {
     private float zoomLevel = 1;
     private String[][] leftHints;
     private String[][] topHints;
+    private LightBox[][] grid;
+    private List<Point> dimBoxes;
 
     public ZoomablePuzzle(Context context) {
         super(context);
@@ -58,13 +61,19 @@ public class ZoomablePuzzle extends GridLayout {
         return this;
     }
 
+    public ZoomablePuzzle setDimmedBoxes(List<Point> dimBoxes) {
+        this.dimBoxes = dimBoxes;
+        return this;
+    }
+
     public void doTheLayoutThatWillEventuallyMoveToXmlAttrs() {
         setColumnCount(colMaxHints + xLightBoxes);
         setRowCount(rowMaxHints + yLightBoxes);
-
+        setGridSize(xLightBoxes, yLightBoxes);
         addLeftHints();
         addTopHints();
         addLightBoxes();
+        toggleDimBoxes();
 
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
@@ -73,6 +82,10 @@ public class ZoomablePuzzle extends GridLayout {
             }
             zoomables.add((Zoomable) view);
         }
+    }
+
+    private void setGridSize(int xSize, int ySize) {
+        grid = new LightBox[xSize][ySize];
     }
 
     private void addLeftHints() {
@@ -98,6 +111,7 @@ public class ZoomablePuzzle extends GridLayout {
             for (int c = rowMaxHints; c < yLightBoxes + rowMaxHints; c++) {
                 LightBox lightBox = createLightBox(r, c);
                 addView(lightBox);
+                grid[r - colMaxHints][c - rowMaxHints] = lightBox;
             }
         }
     }
@@ -130,6 +144,12 @@ public class ZoomablePuzzle extends GridLayout {
         params.bottomMargin = 1;
         params.setGravity(Gravity.CENTER);
         return params;
+    }
+
+    private void toggleDimBoxes() {
+        for(Point point : dimBoxes) {
+            grid[point.x][point.y].setChecked(true);
+        }
     }
 
     @Override
