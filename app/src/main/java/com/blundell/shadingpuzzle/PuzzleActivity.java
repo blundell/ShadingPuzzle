@@ -15,7 +15,7 @@ public class PuzzleActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gchq);
+        setContentView(R.layout.puzzle_activity);
 
         final PuzzleGrid puzzle = (PuzzleGrid) findViewById(R.id.puzzle_grid);
 
