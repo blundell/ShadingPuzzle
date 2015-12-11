@@ -20,6 +20,7 @@ public class GchqActivity extends Activity {
         puzzle.setGridXSize(LIGHT_BOXES_X, MAX_HINTS_PER_COL)
                 .setGridYSize(LIGHT_BOXES_Y, MAX_HINTS_PER_ROW)
                 .setLeftHints(createLeftHints())
+                .setTopHints(createTopHints())
                 .doTheLayoutThatWillEventuallyMoveToXmlAttrs();
 
     }
@@ -55,6 +56,47 @@ public class GchqActivity extends Activity {
         };
         if (hintsForRows.length != LIGHT_BOXES_Y) {
             throw new IllegalStateException("Your data is corrupt " + hintsForRows.length + " != " + LIGHT_BOXES_Y);
+        }
+
+        for (int x = 0; x < hints.length; x++) {
+            String hintsForRow = hintsForRows[x];
+            String[] asArray = hintsForRow.split(",");
+            hints[x] = asArray;
+        }
+        return hints;
+    }
+
+    private String[][] createTopHints() {
+        String[][] hints = new String[LIGHT_BOXES_X][MAX_HINTS_PER_COL];
+        String[] hintsForRows = {
+                " , , , ,7,2,1,1,7",
+                " , , ,1,1,2,2,1,1",
+                "1,3,1,3,1,3,1,3,1",
+                " ,1,3,1,1,5,1,3,1",
+                " ,1,3,1,1,4,1,3,1",
+                " , , ,1,1,1,2,1,1",
+                " , ,7,1,1,1,1,1,7",
+                " , , , , , ,1,1,3",
+                " , ,2,1,2,1,8,2,1",
+                " ,2,2,1,2,1,1,1,2",
+                " , , , ,1,7,3,2,1",
+                " ,1,2,3,1,1,1,1,1",
+                " , , , ,4,1,1,2,6",
+                " , ,3,3,1,1,1,3,1",
+                " , , , ,1,2,5,2,2",
+                "2,2,1,1,1,1,1,2,1",
+                " , ,1,3,3,2,1,8,1",
+                " , , , , , ,6,2,1",
+                " , , ,7,1,4,1,1,3",
+                " , , , ,1,1,1,1,4",
+                " , , ,1,3,1,3,7,1",
+                "1,3,1,1,1,2,1,1,4",
+                " , , ,1,3,1,4,3,3",
+                " , ,1,1,2,2,2,6,1",
+                " , , ,7,1,3,2,1,1",
+        };
+        if (hintsForRows.length != LIGHT_BOXES_X) {
+            throw new IllegalStateException("Your data is corrupt " + hintsForRows.length + " != " + LIGHT_BOXES_X);
         }
 
         for (int x = 0; x < hints.length; x++) {

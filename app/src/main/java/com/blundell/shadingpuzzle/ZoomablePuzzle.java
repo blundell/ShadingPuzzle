@@ -22,6 +22,7 @@ public class ZoomablePuzzle extends GridLayout {
     private int rowMaxHints;
     private float zoomLevel = 1;
     private String[][] leftHints;
+    private String[][] topHints;
 
     public ZoomablePuzzle(Context context) {
         super(context);
@@ -49,6 +50,11 @@ public class ZoomablePuzzle extends GridLayout {
 
     public ZoomablePuzzle setLeftHints(String[][] leftHints) {
         this.leftHints = leftHints;
+        return this;
+    }
+
+    public ZoomablePuzzle setTopHints(String[][] topHints) {
+        this.topHints = topHints;
         return this;
     }
 
@@ -81,7 +87,7 @@ public class ZoomablePuzzle extends GridLayout {
     private void addTopHints() {
         for (int c = rowMaxHints; c < rowMaxHints + xLightBoxes; c++) {
             for (int r = 0; r < colMaxHints; r++) {
-                HintBox hintBox = createHintBox(r, c, "1");
+                HintBox hintBox = createHintBox(r, c, topHints[c - rowMaxHints][r]);
                 addView(hintBox);
             }
         }
@@ -99,6 +105,9 @@ public class ZoomablePuzzle extends GridLayout {
     private HintBox createHintBox(int row, int col, String hint) {
         HintBox hintBox = new HintBox(getContext());
         LayoutParams params = getBoxLayoutParams(row, col);
+        params.leftMargin = 5;
+        params.rightMargin = 5;
+        params.setGravity(Gravity.CENTER);
         hintBox.setLayoutParams(params);
         hintBox.setText(hint);
         return hintBox;
