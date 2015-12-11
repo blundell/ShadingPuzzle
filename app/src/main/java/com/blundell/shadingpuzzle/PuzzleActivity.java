@@ -22,7 +22,7 @@ public class PuzzleActivity extends Activity {
         puzzle.setGridSize(LIGHT_BOXES_PER_LINE)
                 .setLeftHints(createLeftHints())
                 .setTopHints(createTopHints())
-                .setDimmedBoxes(createDimBoxes())
+                .setShadedBoxes(createShadedBoxes())
                 .doTheLayoutThatWillEventuallyMoveToXmlAttrs();
 
         findViewById(R.id.puzzle_reset)
@@ -36,7 +36,7 @@ public class PuzzleActivity extends Activity {
                 );
     }
 
-    private List<Point> createDimBoxes() {
+    private List<Point> createShadedBoxes() {
         ArrayList<Point> points = new ArrayList<>();
         points.add(new Point(3, 3));
         points.add(new Point(3, 4));

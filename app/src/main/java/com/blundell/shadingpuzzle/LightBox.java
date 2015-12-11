@@ -46,7 +46,7 @@ public class LightBox extends CheckBox implements PuzzleGrid.Zoomable {
         setMeasuredDimension((int) (widthSize * scaleFactor), (int) (heightSize * scaleFactor));
     }
 
-    public void setAlwaysDimmed() {
+    public void setAlwaysShaded() {
         setChecked(true);
         setEnabled(false);
     }

@@ -23,7 +23,7 @@ public class PuzzleGrid extends GridLayout {
     private String[][] leftHints;
     private String[][] topHints;
     private LightBox[][] grid;
-    private List<Point> dimmedBoxes;
+    private List<Point> shadedBoxes;
 
     public PuzzleGrid(Context context) {
         super(context);
@@ -68,8 +68,8 @@ public class PuzzleGrid extends GridLayout {
         return this;
     }
 
-    public PuzzleGrid setDimmedBoxes(List<Point> dimmedBoxes) {
-        this.dimmedBoxes = dimmedBoxes;
+    public PuzzleGrid setShadedBoxes(List<Point> shadedBoxes) {
+        this.shadedBoxes = shadedBoxes;
         return this;
     }
 
@@ -79,7 +79,7 @@ public class PuzzleGrid extends GridLayout {
         addLeftHints();
         addTopHints();
         addLightBoxes();
-        toggleDimBoxes();
+        shadeBoxes();
     }
 
     private void addLeftHints() {
@@ -143,10 +143,10 @@ public class PuzzleGrid extends GridLayout {
         return params;
     }
 
-    private void toggleDimBoxes() {
-        for (Point point : dimmedBoxes) {
+    private void shadeBoxes() {
+        for (Point point : shadedBoxes) {
             LightBox lightBox = grid[point.x][point.y];
-            lightBox.setAlwaysDimmed();
+            lightBox.setAlwaysShaded();
         }
     }
 
