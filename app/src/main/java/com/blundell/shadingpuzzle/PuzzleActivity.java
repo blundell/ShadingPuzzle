@@ -34,6 +34,26 @@ public class PuzzleActivity extends Activity {
                             }
                         }
                 );
+
+        findViewById(R.id.puzzle_zoom_in)
+                .setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                puzzle.zoomIn();
+                            }
+                        }
+                );
+
+        findViewById(R.id.puzzle_zoom_out)
+                .setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                puzzle.zoomOut();
+                            }
+                        }
+                );
     }
 
     private List<Point> createShadedBoxes() {

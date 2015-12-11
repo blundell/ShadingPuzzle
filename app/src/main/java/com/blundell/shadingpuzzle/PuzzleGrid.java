@@ -3,10 +3,7 @@ package com.blundell.shadingpuzzle;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.widget.GridLayout;
 
 import java.util.ArrayList;
@@ -15,7 +12,6 @@ import java.util.List;
 public class PuzzleGrid extends GridLayout {
     private final List<Zoomable> zoomables = new ArrayList<>();
 
-    private ScaleGestureDetector scaleGestureDetector;
     private int xLightBoxes;
     private int colMaxHints;
     private int yLightBoxes;
@@ -35,12 +31,6 @@ public class PuzzleGrid extends GridLayout {
 
     public PuzzleGrid(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        scaleGestureDetector = new ScaleGestureDetector(getContext(), new ZoomAdjuster(zoomables));
     }
 
     public PuzzleGrid setGridSize(int lightBoxes) {
@@ -150,12 +140,6 @@ public class PuzzleGrid extends GridLayout {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        scaleGestureDetector.onTouchEvent(event);
-        return true;
-    }
-
     /**
      * Restarts the puzzle and all state
      */
@@ -164,49 +148,19 @@ public class PuzzleGrid extends GridLayout {
         doTheLayoutThatWillEventuallyMoveToXmlAttrs();
     }
 
-    interface Zoomable {
-        void adjustZoom(float scaleFactor);
+    public void zoomIn() {
+        for (Zoomable zoomable : zoomables) {
+            zoomable.adjustZoom(0.9f);
+        }
     }
 
-    private static class ZoomAdjuster implements ScaleGestureDetector.OnScaleGestureListener {
-
-        private final List<Zoomable> zoomables;
-
-        private ZoomAdjuster(List<Zoomable> zoomables) {
-            this.zoomables = zoomables;
+    public void zoomOut() {
+        for (Zoomable zoomable : zoomables) {
+            zoomable.adjustZoom(0.3f);
         }
+    }
 
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            float scaleFactor = detector.getScaleFactor();
-            float zoomLevel = 1;
-            if (scaleFactor > 1.2) {
-                zoomLevel = 0.8F;
-            } else if (scaleFactor > 1.0) {
-                zoomLevel = 0.5F;
-            } else if (scaleFactor > 0.8) {
-                zoomLevel = 0.3F;
-            } else if (scaleFactor > 0.7) {
-                zoomLevel = 0.2F;
-            } else if (scaleFactor > 0.6) {
-                zoomLevel = 0.1F;
-            }
-
-            Log.d("XXX", "Factor " + scaleFactor);
-            for (Zoomable zoomable : zoomables) {
-                zoomable.adjustZoom(zoomLevel);
-            }
-            return false;
-        }
-
-        @Override
-        public boolean onScaleBegin(ScaleGestureDetector detector) {
-            return true;
-        }
-
-        @Override
-        public void onScaleEnd(ScaleGestureDetector detector) {
-            // nothing
-        }
+    interface Zoomable {
+        void adjustZoom(float scaleFactor);
     }
 }
