@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.View;
 import android.widget.GridLayout;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class ZoomablePuzzle extends GridLayout {
     private String[][] leftHints;
     private String[][] topHints;
     private LightBox[][] grid;
-    private List<Point> dimBoxes;
+    private List<Point> dimmedBoxes;
 
     public ZoomablePuzzle(Context context) {
         super(context);
@@ -61,8 +60,8 @@ public class ZoomablePuzzle extends GridLayout {
         return this;
     }
 
-    public ZoomablePuzzle setDimmedBoxes(List<Point> dimBoxes) {
-        this.dimBoxes = dimBoxes;
+    public ZoomablePuzzle setDimmedBoxes(List<Point> dimmedBoxes) {
+        this.dimmedBoxes = dimmedBoxes;
         return this;
     }
 
@@ -74,14 +73,6 @@ public class ZoomablePuzzle extends GridLayout {
         addTopHints();
         addLightBoxes();
         toggleDimBoxes();
-
-        for (int i = 0; i < getChildCount(); i++) {
-            View view = getChildAt(i);
-            if (!(view instanceof Zoomable)) {
-                throw new IllegalStateException("All children must implement Zoomable. Bad boi:" + view);
-            }
-            zoomables.add((Zoomable) view);
-        }
     }
 
     private void setGridSize(int xSize, int ySize) {
@@ -93,6 +84,7 @@ public class ZoomablePuzzle extends GridLayout {
             for (int c = 0; c < rowMaxHints; c++) {
                 HintBox hintBox = createHintBox(r, c, leftHints[r - colMaxHints][c]);
                 addView(hintBox);
+                zoomables.add(hintBox);
             }
         }
     }
@@ -102,6 +94,7 @@ public class ZoomablePuzzle extends GridLayout {
             for (int r = 0; r < colMaxHints; r++) {
                 HintBox hintBox = createHintBox(r, c, topHints[c - rowMaxHints][r]);
                 addView(hintBox);
+                zoomables.add(hintBox);
             }
         }
     }
@@ -112,6 +105,7 @@ public class ZoomablePuzzle extends GridLayout {
                 LightBox lightBox = createLightBox(r, c);
                 addView(lightBox);
                 grid[r - colMaxHints][c - rowMaxHints] = lightBox;
+                zoomables.add(lightBox);
             }
         }
     }
@@ -147,7 +141,7 @@ public class ZoomablePuzzle extends GridLayout {
     }
 
     private void toggleDimBoxes() {
-        for(Point point : dimBoxes) {
+        for(Point point : dimmedBoxes) {
             LightBox lightBox = grid[point.x][point.y];
             lightBox.setChecked(true);
         }
