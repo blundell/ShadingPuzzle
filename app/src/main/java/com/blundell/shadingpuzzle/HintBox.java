@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.widget.TextView;
 
-public class HintBox extends TextView implements ZoomablePuzzle.Zoomable {
+public class HintBox extends TextView implements PuzzleGrid.Zoomable {
 
     private float originalTextSize;
 

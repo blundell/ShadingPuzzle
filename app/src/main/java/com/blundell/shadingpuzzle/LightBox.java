@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.CheckBox;
 
-public class LightBox extends CheckBox implements ZoomablePuzzle.Zoomable {
+public class LightBox extends CheckBox implements PuzzleGrid.Zoomable {
 
     private final Paint onPaint = new Paint();
     private final Paint alwaysOnPaint = new Paint();

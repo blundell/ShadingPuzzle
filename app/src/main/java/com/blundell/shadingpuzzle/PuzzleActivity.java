@@ -17,7 +17,7 @@ public class PuzzleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gchq);
 
-        final ZoomablePuzzle puzzle = (ZoomablePuzzle) findViewById(R.id.root);
+        final PuzzleGrid puzzle = (PuzzleGrid) findViewById(R.id.puzzle_grid);
 
         puzzle.setGridSize(LIGHT_BOXES_PER_LINE)
                 .setLeftHints(createLeftHints())

@@ -12,7 +12,7 @@ import android.widget.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZoomablePuzzle extends GridLayout {
+public class PuzzleGrid extends GridLayout {
     private final List<Zoomable> zoomables = new ArrayList<>();
 
     private ScaleGestureDetector scaleGestureDetector;
@@ -25,15 +25,15 @@ public class ZoomablePuzzle extends GridLayout {
     private LightBox[][] grid;
     private List<Point> dimmedBoxes;
 
-    public ZoomablePuzzle(Context context) {
+    public PuzzleGrid(Context context) {
         super(context);
     }
 
-    public ZoomablePuzzle(Context context, AttributeSet attrs) {
+    public PuzzleGrid(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ZoomablePuzzle(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PuzzleGrid(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -43,7 +43,7 @@ public class ZoomablePuzzle extends GridLayout {
         scaleGestureDetector = new ScaleGestureDetector(getContext(), new ZoomAdjuster(zoomables));
     }
 
-    public ZoomablePuzzle setGridSize(int lightBoxes) {
+    public PuzzleGrid setGridSize(int lightBoxes) {
         this.xLightBoxes = lightBoxes;
         this.yLightBoxes = lightBoxes;
         this.grid = new LightBox[xLightBoxes][yLightBoxes];
@@ -53,7 +53,7 @@ public class ZoomablePuzzle extends GridLayout {
     /**
      * @param leftHints HAS to be a uniform 2d array i.e. all secondary arrays have to be the same length
      */
-    public ZoomablePuzzle setLeftHints(String[][] leftHints) {
+    public PuzzleGrid setLeftHints(String[][] leftHints) {
         this.leftHints = leftHints;
         this.rowMaxHints = leftHints[0].length;
         return this;
@@ -62,13 +62,13 @@ public class ZoomablePuzzle extends GridLayout {
     /**
      * @param topHints HAS to be a uniform 2d array i.e. all secondary arrays have to be the same length
      */
-    public ZoomablePuzzle setTopHints(String[][] topHints) {
+    public PuzzleGrid setTopHints(String[][] topHints) {
         this.topHints = topHints;
         this.colMaxHints = topHints[0].length;
         return this;
     }
 
-    public ZoomablePuzzle setDimmedBoxes(List<Point> dimmedBoxes) {
+    public PuzzleGrid setDimmedBoxes(List<Point> dimmedBoxes) {
         this.dimmedBoxes = dimmedBoxes;
         return this;
     }
