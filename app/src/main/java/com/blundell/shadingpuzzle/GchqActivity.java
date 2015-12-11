@@ -5,13 +5,13 @@ import android.os.Bundle;
 
 public class GchqActivity extends Activity {
 
-    public static final int MAX_HINTS_PER_ROW = 9;
-    public static final int MAX_HINTS_PER_COL = 9;
-    public static final int LIGHT_BOXES_X = 25;
-    public static final int LIGHT_BOXES_Y = 25;
+    private static final int MAX_HINTS_PER_ROW = 9;
+    private static final int MAX_HINTS_PER_COL = 9;
+    private static final int LIGHT_BOXES_X = 25;
+    private static final int LIGHT_BOXES_Y = 25;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gchq);
 
@@ -26,7 +26,6 @@ public class GchqActivity extends Activity {
     }
 
     private String[][] createLeftHints() {
-        String[][] hints = new String[LIGHT_BOXES_Y][MAX_HINTS_PER_ROW];
         String[] hintsForRows = {
                 " , , , ,7,3,1,1,7",
                 " , , ,1,1,2,2,1,1",
@@ -54,21 +53,11 @@ public class GchqActivity extends Activity {
                 " , , ,1,1,2,1,1,2",
                 " , , , ,7,2,1,2,5",
         };
-        if (hintsForRows.length != LIGHT_BOXES_Y) {
-            throw new IllegalStateException("Your data is corrupt " + hintsForRows.length + " != " + LIGHT_BOXES_Y);
-        }
-
-        for (int x = 0; x < hints.length; x++) {
-            String hintsForRow = hintsForRows[x];
-            String[] asArray = hintsForRow.split(",");
-            hints[x] = asArray;
-        }
-        return hints;
+        return createHints(LIGHT_BOXES_Y, MAX_HINTS_PER_ROW, hintsForRows);
     }
 
     private String[][] createTopHints() {
-        String[][] hints = new String[LIGHT_BOXES_X][MAX_HINTS_PER_COL];
-        String[] hintsForRows = {
+        String[] hintsForCols = {
                 " , , , ,7,2,1,1,7",
                 " , , ,1,1,2,2,1,1",
                 "1,3,1,3,1,3,1,3,1",
@@ -95,13 +84,17 @@ public class GchqActivity extends Activity {
                 " , ,1,1,2,2,2,6,1",
                 " , , ,7,1,3,2,1,1",
         };
-        if (hintsForRows.length != LIGHT_BOXES_X) {
-            throw new IllegalStateException("Your data is corrupt " + hintsForRows.length + " != " + LIGHT_BOXES_X);
-        }
+        return createHints(LIGHT_BOXES_X, MAX_HINTS_PER_COL, hintsForCols);
+    }
 
+    private String[][] createHints(int totalHintLines, int maxHintsPerLine, String[] hintLines) {
+        if (totalHintLines != hintLines.length) {
+            throw new IllegalStateException("Your input is corrupt " + totalHintLines + " != " + hintLines.length);
+        }
+        String[][] hints = new String[totalHintLines][maxHintsPerLine];
         for (int x = 0; x < hints.length; x++) {
-            String hintsForRow = hintsForRows[x];
-            String[] asArray = hintsForRow.split(",");
+            String hintsForLine = hintLines[x];
+            String[] asArray = hintsForLine.split(",");
             hints[x] = asArray;
         }
         return hints;
