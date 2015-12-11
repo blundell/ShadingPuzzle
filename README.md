@@ -6,10 +6,10 @@ http://www.bbc.co.uk/news/uk-35058761
 
 Hacked this together so I can take the challenge on my phone!
 
-TODO:
-
- - A winning screen!
-
 ![](preview.png)
 
 APK to give it a go can be found under /releases/
+
+TODO:
+
+ - A winning screen!
