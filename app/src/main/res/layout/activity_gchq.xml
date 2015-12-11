@@ -11,4 +11,10 @@
     android:layout_height="wrap_content"
     tools:context="com.novoda.all4.debug.GchqActivity" />
 
+  <Button
+    android:id="@+id/puzzle_reset"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/reset" />
+
 </LinearLayout>

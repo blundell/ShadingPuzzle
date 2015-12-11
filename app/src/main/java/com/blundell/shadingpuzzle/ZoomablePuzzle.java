@@ -144,7 +144,7 @@ public class ZoomablePuzzle extends GridLayout {
     }
 
     private void toggleDimBoxes() {
-        for(Point point : dimmedBoxes) {
+        for (Point point : dimmedBoxes) {
             LightBox lightBox = grid[point.x][point.y];
             lightBox.setAlwaysDimmed();
         }
@@ -154,6 +154,14 @@ public class ZoomablePuzzle extends GridLayout {
     public boolean onTouchEvent(MotionEvent event) {
         scaleGestureDetector.onTouchEvent(event);
         return true;
+    }
+
+    /**
+     * Restarts the puzzle and all state
+     */
+    public void reset() {
+        removeAllViews();
+        doTheLayoutThatWillEventuallyMoveToXmlAttrs();
     }
 
     interface Zoomable {

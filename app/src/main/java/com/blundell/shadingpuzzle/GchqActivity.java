@@ -3,6 +3,7 @@ package com.blundell.shadingpuzzle;
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class GchqActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gchq);
 
-        ZoomablePuzzle puzzle = (ZoomablePuzzle) findViewById(R.id.root);
+        final ZoomablePuzzle puzzle = (ZoomablePuzzle) findViewById(R.id.root);
 
         puzzle.setGridSize(LIGHT_BOXES_PER_LINE)
                 .setLeftHints(createLeftHints())
@@ -24,36 +25,44 @@ public class GchqActivity extends Activity {
                 .setDimmedBoxes(createDimBoxes())
                 .doTheLayoutThatWillEventuallyMoveToXmlAttrs();
 
+        findViewById(R.id.puzzle_reset)
+                .setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                puzzle.reset();
+                            }
+                        }
+                );
     }
 
     private List<Point> createDimBoxes() {
         ArrayList<Point> points = new ArrayList<>();
-        points.add(new Point(3,3));
-        points.add(new Point(3,4));
-        points.add(new Point(3,12));
-        points.add(new Point(3,13));
-        points.add(new Point(3,21));
+        points.add(new Point(3, 3));
+        points.add(new Point(3, 4));
+        points.add(new Point(3, 12));
+        points.add(new Point(3, 13));
+        points.add(new Point(3, 21));
 
-        points.add(new Point(8,6));
-        points.add(new Point(8,7));
-        points.add(new Point(8,10));
-        points.add(new Point(8,14));
-        points.add(new Point(8,15));
-        points.add(new Point(8,18));
+        points.add(new Point(8, 6));
+        points.add(new Point(8, 7));
+        points.add(new Point(8, 10));
+        points.add(new Point(8, 14));
+        points.add(new Point(8, 15));
+        points.add(new Point(8, 18));
 
-        points.add(new Point(16,6));
-        points.add(new Point(16,11));
-        points.add(new Point(16,16));
-        points.add(new Point(16,20));
+        points.add(new Point(16, 6));
+        points.add(new Point(16, 11));
+        points.add(new Point(16, 16));
+        points.add(new Point(16, 20));
 
-        points.add(new Point(21,3));
-        points.add(new Point(21,4));
-        points.add(new Point(21,9));
-        points.add(new Point(21,10));
-        points.add(new Point(21,15));
-        points.add(new Point(21,20));
-        points.add(new Point(21,21));
-
+        points.add(new Point(21, 3));
+        points.add(new Point(21, 4));
+        points.add(new Point(21, 9));
+        points.add(new Point(21, 10));
+        points.add(new Point(21, 15));
+        points.add(new Point(21, 20));
+        points.add(new Point(21, 21));
 
         return points;
     }
