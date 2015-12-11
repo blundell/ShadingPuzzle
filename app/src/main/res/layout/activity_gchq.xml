@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:scrollbars="vertical">
 
-  <com.blundell.shadingpuzzle.ZoomablePuzzle
-    android:id="@+id/root"
+  <HorizontalScrollView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:context="com.novoda.all4.debug.GchqActivity" />
+    android:layout_height="wrap_content">
 
-  <Button
-    android:id="@+id/puzzle_reset"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/reset" />
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
-</LinearLayout>
+      <com.blundell.shadingpuzzle.ZoomablePuzzle
+        android:id="@+id/root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:context="com.novoda.all4.debug.GchqActivity" />
+
+      <Button
+        android:id="@+id/puzzle_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset" />
+
+    </LinearLayout>
+
+  </HorizontalScrollView>
+</ScrollView>
