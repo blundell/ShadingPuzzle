@@ -45,15 +45,21 @@ public class ZoomablePuzzle extends GridLayout {
         return this;
     }
 
-    public ZoomablePuzzle setLeftHints(String[][] leftHints, int maxHintsPerRow) {
+    /**
+     * @param leftHints HAS to be a uniform 2d array i.e. all secondary arrays have to be the same length
+     */
+    public ZoomablePuzzle setLeftHints(String[][] leftHints) {
         this.leftHints = leftHints;
-        this.rowMaxHints = maxHintsPerRow;
+        this.rowMaxHints = leftHints[0].length;
         return this;
     }
 
-    public ZoomablePuzzle setTopHints(String[][] topHints, int maxHintsPerCol) {
+    /**
+     * @param topHints HAS to be a uniform 2d array i.e. all secondary arrays have to be the same length
+     */
+    public ZoomablePuzzle setTopHints(String[][] topHints) {
         this.topHints = topHints;
-        this.colMaxHints = maxHintsPerCol;
+        this.colMaxHints = topHints[0].length;
         return this;
     }
 

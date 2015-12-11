@@ -9,7 +9,6 @@ import java.util.List;
 
 public class GchqActivity extends Activity {
 
-    private static final int MAX_HINTS_PER_LINE = 9;
     private static final int LIGHT_BOXES_PER_LINE = 25;
 
     @Override
@@ -20,8 +19,8 @@ public class GchqActivity extends Activity {
         ZoomablePuzzle puzzle = (ZoomablePuzzle) findViewById(R.id.root);
 
         puzzle.setGridSize(LIGHT_BOXES_PER_LINE)
-                .setLeftHints(createLeftHints(), MAX_HINTS_PER_LINE)
-                .setTopHints(createTopHints(), MAX_HINTS_PER_LINE)
+                .setLeftHints(createLeftHints())
+                .setTopHints(createTopHints())
                 .setDimmedBoxes(createDimBoxes())
                 .doTheLayoutThatWillEventuallyMoveToXmlAttrs();
 
@@ -87,7 +86,7 @@ public class GchqActivity extends Activity {
                 " , , ,1,1,2,1,1,2",
                 " , , , ,7,2,1,2,5",
         };
-        return createHints(LIGHT_BOXES_PER_LINE, MAX_HINTS_PER_LINE, hintsForRows);
+        return createHints(LIGHT_BOXES_PER_LINE, hintsForRows);
     }
 
     private String[][] createTopHints() {
@@ -118,14 +117,14 @@ public class GchqActivity extends Activity {
                 " , ,1,1,2,2,2,6,1",
                 " , , ,7,1,3,2,1,1",
         };
-        return createHints(LIGHT_BOXES_PER_LINE, MAX_HINTS_PER_LINE, hintsForCols);
+        return createHints(LIGHT_BOXES_PER_LINE, hintsForCols);
     }
 
-    private String[][] createHints(int totalHintLines, int maxHintsPerLine, String[] hintLines) {
+    private String[][] createHints(int totalHintLines, String[] hintLines) {
         if (totalHintLines != hintLines.length) {
             throw new IllegalStateException("Your input is corrupt " + totalHintLines + " != " + hintLines.length);
         }
-        String[][] hints = new String[totalHintLines][maxHintsPerLine];
+        String[][] hints = new String[totalHintLines][];
         for (int x = 0; x < hints.length; x++) {
             String hintsForLine = hintLines[x];
             String[] asArray = hintsForLine.split(",");
