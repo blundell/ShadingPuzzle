@@ -32,7 +32,33 @@ public class GchqActivity extends Activity {
 
     private List<Point> createDimBoxes() {
         ArrayList<Point> points = new ArrayList<>();
-        points.add(new Point(0,0));
+        points.add(new Point(3,3));
+        points.add(new Point(3,4));
+        points.add(new Point(3,12));
+        points.add(new Point(3,13));
+        points.add(new Point(3,21));
+
+        points.add(new Point(8,6));
+        points.add(new Point(8,7));
+        points.add(new Point(8,10));
+        points.add(new Point(8,14));
+        points.add(new Point(8,15));
+        points.add(new Point(8,18));
+
+        points.add(new Point(16,6));
+        points.add(new Point(16,11));
+        points.add(new Point(16,16));
+        points.add(new Point(16,20));
+
+        points.add(new Point(21,3));
+        points.add(new Point(21,4));
+        points.add(new Point(21,9));
+        points.add(new Point(21,10));
+        points.add(new Point(21,15));
+        points.add(new Point(21,20));
+        points.add(new Point(21,21));
+
+
         return points;
     }
 
