@@ -11,6 +11,7 @@ import java.util.List;
 
 public class PuzzleGrid extends GridLayout {
     private final List<Zoomable> zoomables = new ArrayList<>();
+    private final PuzzleStateHolder repository;
 
     private int xLightBoxes;
     private int colMaxHints;
@@ -23,16 +24,22 @@ public class PuzzleGrid extends GridLayout {
 
     public PuzzleGrid(Context context) {
         super(context);
+        repository = PuzzleStateHolder.newInstance(context);
     }
 
     public PuzzleGrid(Context context, AttributeSet attrs) {
         super(context, attrs);
+        repository = PuzzleStateHolder.newInstance(context);
     }
 
     public PuzzleGrid(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        repository = PuzzleStateHolder.newInstance(context);
     }
 
+    /**
+     * @param lightBoxes the X by Y of shaded boxes you want the puzzle ot be
+     */
     public PuzzleGrid setGridSize(int lightBoxes) {
         this.xLightBoxes = lightBoxes;
         this.yLightBoxes = lightBoxes;
@@ -58,6 +65,10 @@ public class PuzzleGrid extends GridLayout {
         return this;
     }
 
+    /**
+     * @param shadedBoxes the X,Y positions of any boxes you want pre-shaded
+     * @return
+     */
     public PuzzleGrid setShadedBoxes(List<Point> shadedBoxes) {
         this.shadedBoxes = shadedBoxes;
         return this;
@@ -141,9 +152,24 @@ public class PuzzleGrid extends GridLayout {
     }
 
     /**
+     * Expected to be called in onPause, unguaranteed behaviour otherwise
+     */
+    public void saveState() {
+        repository.saveSate(grid);
+    }
+
+    /**
+     * Expected to be called in onResume, unguaranteed behaviour otherwise
+     */
+    public void restoreState() {
+        repository.restoreState(grid);
+    }
+
+    /**
      * Restarts the puzzle and all state
      */
     public void reset() {
+        repository.clear();
         removeAllViews();
         doTheLayoutThatWillEventuallyMoveToXmlAttrs();
     }
@@ -163,4 +189,5 @@ public class PuzzleGrid extends GridLayout {
     interface Zoomable {
         void adjustZoom(float scaleFactor);
     }
+
 }
