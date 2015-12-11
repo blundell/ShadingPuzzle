@@ -20,7 +20,6 @@ public class ZoomablePuzzle extends GridLayout {
     private int colMaxHints;
     private int yLightBoxes;
     private int rowMaxHints;
-    private float zoomLevel = 1;
     private String[][] leftHints;
     private String[][] topHints;
     private LightBox[][] grid;
@@ -36,6 +35,12 @@ public class ZoomablePuzzle extends GridLayout {
 
     public ZoomablePuzzle(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        scaleGestureDetector = new ScaleGestureDetector(getContext(), new ZoomAdjuster(zoomables));
     }
 
     public ZoomablePuzzle setGridSize(int lightBoxes) {
@@ -146,49 +151,6 @@ public class ZoomablePuzzle extends GridLayout {
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-
-        scaleGestureDetector = new ScaleGestureDetector(
-                getContext(),
-                new ScaleGestureDetector.OnScaleGestureListener() {
-                    @Override
-                    public boolean onScale(ScaleGestureDetector detector) {
-                        float scaleFactor = detector.getScaleFactor();
-
-                        if (scaleFactor > 1.2) {
-                            zoomLevel = 0.8F;
-                        } else if (scaleFactor > 1.0) {
-                            zoomLevel = 0.5F;
-                        } else if (scaleFactor > 0.8) {
-                            zoomLevel = 0.3F;
-                        } else if (scaleFactor > 0.7) {
-                            zoomLevel = 0.2F;
-                        } else if (scaleFactor > 0.6) {
-                            zoomLevel = 0.1F;
-                        }
-
-                        Log.d("XXX", "Factor " + scaleFactor);
-                        for (Zoomable zoomable : zoomables) {
-                            zoomable.adjustZoom(zoomLevel);
-                        }
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onScaleBegin(ScaleGestureDetector detector) {
-                        return true;
-                    }
-
-                    @Override
-                    public void onScaleEnd(ScaleGestureDetector detector) {
-
-                    }
-                }
-        );
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         scaleGestureDetector.onTouchEvent(event);
         return true;
@@ -196,5 +158,47 @@ public class ZoomablePuzzle extends GridLayout {
 
     interface Zoomable {
         void adjustZoom(float scaleFactor);
+    }
+
+    private static class ZoomAdjuster implements ScaleGestureDetector.OnScaleGestureListener {
+
+        private final List<Zoomable> zoomables;
+
+        private ZoomAdjuster(List<Zoomable> zoomables) {
+            this.zoomables = zoomables;
+        }
+
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            float scaleFactor = detector.getScaleFactor();
+            float zoomLevel = 1;
+            if (scaleFactor > 1.2) {
+                zoomLevel = 0.8F;
+            } else if (scaleFactor > 1.0) {
+                zoomLevel = 0.5F;
+            } else if (scaleFactor > 0.8) {
+                zoomLevel = 0.3F;
+            } else if (scaleFactor > 0.7) {
+                zoomLevel = 0.2F;
+            } else if (scaleFactor > 0.6) {
+                zoomLevel = 0.1F;
+            }
+
+            Log.d("XXX", "Factor " + scaleFactor);
+            for (Zoomable zoomable : zoomables) {
+                zoomable.adjustZoom(zoomLevel);
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onScaleBegin(ScaleGestureDetector detector) {
+            return true;
+        }
+
+        @Override
+        public void onScaleEnd(ScaleGestureDetector detector) {
+            // nothing
+        }
     }
 }
