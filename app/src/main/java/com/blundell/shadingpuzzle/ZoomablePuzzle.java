@@ -97,17 +97,6 @@ public class ZoomablePuzzle extends GridLayout {
         }
     }
 
-    private void addLightBoxes() {
-        for (int r = colMaxHints; r < xLightBoxes + colMaxHints; r++) {
-            for (int c = rowMaxHints; c < yLightBoxes + rowMaxHints; c++) {
-                LightBox lightBox = createLightBox(r, c);
-                addView(lightBox);
-                grid[r - colMaxHints][c - rowMaxHints] = lightBox;
-                zoomables.add(lightBox);
-            }
-        }
-    }
-
     private HintBox createHintBox(int row, int col, String hint) {
         HintBox hintBox = new HintBox(getContext());
         LayoutParams params = getBoxLayoutParams(row, col);
@@ -117,6 +106,17 @@ public class ZoomablePuzzle extends GridLayout {
         hintBox.setLayoutParams(params);
         hintBox.setText(hint);
         return hintBox;
+    }
+
+    private void addLightBoxes() {
+        for (int r = colMaxHints; r < xLightBoxes + colMaxHints; r++) {
+            for (int c = rowMaxHints; c < yLightBoxes + rowMaxHints; c++) {
+                LightBox lightBox = createLightBox(r, c);
+                addView(lightBox);
+                grid[r - colMaxHints][c - rowMaxHints] = lightBox;
+                zoomables.add(lightBox);
+            }
+        }
     }
 
     private LightBox createLightBox(int row, int col) {
