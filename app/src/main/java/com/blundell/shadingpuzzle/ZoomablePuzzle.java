@@ -21,6 +21,7 @@ public class ZoomablePuzzle extends GridLayout {
     private int yLightBoxes;
     private int rowMaxHints;
     private float zoomLevel = 1;
+    private String[][] leftHints;
 
     public ZoomablePuzzle(Context context) {
         super(context);
@@ -46,38 +47,18 @@ public class ZoomablePuzzle extends GridLayout {
         return this;
     }
 
+    public ZoomablePuzzle setLeftHints(String[][] leftHints) {
+        this.leftHints = leftHints;
+        return this;
+    }
+
     public void doTheLayoutThatWillEventuallyMoveToXmlAttrs() {
         setColumnCount(colMaxHints + xLightBoxes);
         setRowCount(rowMaxHints + yLightBoxes);
 
-        for (int r = colMaxHints; r < colMaxHints + yLightBoxes; r++) {
-            for (int c = 0; c < rowMaxHints; c++) {
-                HintBox hintBox = new HintBox(getContext());
-                LayoutParams params = getBoxLayoutParams(r, c);
-                hintBox.setLayoutParams(params);
-                hintBox.setText("1");
-                addView(hintBox);
-            }
-        }
-
-        for (int c = rowMaxHints; c < rowMaxHints + xLightBoxes; c++) {
-            for (int r = 0; r < colMaxHints; r++) {
-                HintBox hintBox = new HintBox(getContext());
-                LayoutParams params = getBoxLayoutParams(r, c);
-                hintBox.setLayoutParams(params);
-                hintBox.setText("1");
-                addView(hintBox);
-            }
-        }
-
-        for (int r = colMaxHints; r < xLightBoxes + colMaxHints; r++) {
-            for (int c = rowMaxHints; c < yLightBoxes + rowMaxHints; c++) {
-                LightBox lightBox = new LightBox(getContext());
-                LayoutParams params = getBoxLayoutParams(r, c);
-                lightBox.setLayoutParams(params);
-                addView(lightBox);
-            }
-        }
+        addLeftHints();
+        addTopHints();
+        addLightBoxes();
 
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
@@ -86,6 +67,48 @@ public class ZoomablePuzzle extends GridLayout {
             }
             zoomables.add((Zoomable) view);
         }
+    }
+
+    private void addLeftHints() {
+        for (int r = colMaxHints; r < colMaxHints + yLightBoxes; r++) {
+            for (int c = 0; c < rowMaxHints; c++) {
+                HintBox hintBox = createHintBox(r, c, leftHints[r - colMaxHints][c]);
+                addView(hintBox);
+            }
+        }
+    }
+
+    private void addTopHints() {
+        for (int c = rowMaxHints; c < rowMaxHints + xLightBoxes; c++) {
+            for (int r = 0; r < colMaxHints; r++) {
+                HintBox hintBox = createHintBox(r, c, "1");
+                addView(hintBox);
+            }
+        }
+    }
+
+    private void addLightBoxes() {
+        for (int r = colMaxHints; r < xLightBoxes + colMaxHints; r++) {
+            for (int c = rowMaxHints; c < yLightBoxes + rowMaxHints; c++) {
+                LightBox lightBox = createLightBox(r, c);
+                addView(lightBox);
+            }
+        }
+    }
+
+    private HintBox createHintBox(int row, int col, String hint) {
+        HintBox hintBox = new HintBox(getContext());
+        LayoutParams params = getBoxLayoutParams(row, col);
+        hintBox.setLayoutParams(params);
+        hintBox.setText(hint);
+        return hintBox;
+    }
+
+    private LightBox createLightBox(int row, int col) {
+        LightBox lightBox = new LightBox(getContext());
+        LayoutParams params = getBoxLayoutParams(row, col);
+        lightBox.setLayoutParams(params);
+        return lightBox;
     }
 
     private LayoutParams getBoxLayoutParams(int rowPos, int colPos) {
