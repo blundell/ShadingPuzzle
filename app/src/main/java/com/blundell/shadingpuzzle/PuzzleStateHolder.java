@@ -24,14 +24,14 @@ class PuzzleStateHolder {
         preferences.edit().clear().apply();
     }
 
-    public void saveSate(LightBox[][] grid) {
+    public void saveSate(LightBox[][] grid) { // TODO save half shaded
         SharedPreferences.Editor editor = preferences.edit();
         editor
-                .putInt(TOTAL_X, grid.length)
-                .putInt(TOTAL_Y, grid[0].length);
+            .putInt(TOTAL_X, grid.length)
+            .putInt(TOTAL_Y, grid[0].length);
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
-                boolean checked = grid[x][y].isChecked();
+                boolean checked = grid[x][y].isShaded();
                 editor.putBoolean(getKey(x, y), checked);
             }
         }
@@ -44,7 +44,7 @@ class PuzzleStateHolder {
         for (int x = 0; x < gridX; x++) {
             for (int y = 0; y < gridY; y++) {
                 boolean checked = preferences.getBoolean(getKey(x, y), false);
-                grid[x][y].setChecked(checked);
+                grid[x][y].setShaded(checked);
             }
         }
     }
