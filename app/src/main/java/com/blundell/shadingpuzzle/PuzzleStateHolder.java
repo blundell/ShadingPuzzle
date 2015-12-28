@@ -31,8 +31,11 @@ class PuzzleStateHolder {
             .putInt(TOTAL_Y, grid[0].length);
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
-                boolean checked = grid[x][y].isShaded();
-                editor.putBoolean(getKey(x, y), checked);
+                LightBox lightBox = grid[x][y];
+                boolean halfShaded = lightBox.isHalfShaded();
+                editor.putBoolean(getHalfShadedKey(x, y), halfShaded);
+                boolean fullyShaded = lightBox.isShaded();
+                editor.putBoolean(getShadedKey(x, y), fullyShaded);
             }
         }
         editor.apply();
@@ -43,13 +46,20 @@ class PuzzleStateHolder {
         int gridY = preferences.getInt(TOTAL_Y, 0);
         for (int x = 0; x < gridX; x++) {
             for (int y = 0; y < gridY; y++) {
-                boolean checked = preferences.getBoolean(getKey(x, y), false);
-                grid[x][y].setShaded(checked);
+                LightBox lightBox = grid[x][y];
+                boolean halfShaded = preferences.getBoolean(getShadedKey(x, y), false);
+                lightBox.setHalfShaded(halfShaded);
+                boolean fullyShaded = preferences.getBoolean(getShadedKey(x, y), false);
+                lightBox.setShaded(fullyShaded);
             }
         }
     }
 
-    private String getKey(int x, int y) {
+    private String getShadedKey(int x, int y) {
         return "state" + x + "/" + y;
+    }
+
+    private String getHalfShadedKey(int x, int y) {
+        return "state-halfShadedKey" + x + "/" + y;
     }
 }
